@@ -1,4 +1,3 @@
-
 #ifndef BINARYTREE_HPP
 #define BINARYTREE_HPP
 
@@ -30,6 +29,7 @@ class BinaryTree{
 				printPreOrder(head->right);
 		}		
 	}
+	
 	void printPostOrder(const BinaryNode<ST>* head){
 		if(head){
 			if( head->left )
@@ -39,6 +39,37 @@ class BinaryTree{
 			std::cout << head->data << " ";
 		}		
 	}
+
+	int weight(const BinaryNode<ST>* current){
+		if( current ){
+			return  1 + weight(current->left) + weight(current->right);
+		}
+		return 0;
+	}
+
+
+
+	T minimun(BinaryNode<ST>* current, BinaryNode<ST> **&position){
+		position = &current;
+		while((*position)->left){
+			position = &((*position)->left);
+		}
+		return (*position)->data;
+	}
+
+	BinaryNode<ST>* maximun(BinaryNode<ST>* current, BinaryNode<ST> **&position){
+		//RETORNAR PADRE MINIMO!!
+		position = &current;
+		while((*position)->right){
+			position = &((*position)->right);
+		}
+		return (*position);
+	}
+	
+	bool deleteElement(BinaryNode<ST>* &current, T value){
+
+		return false;
+	}
 	
 public:
 	BinaryTree()
@@ -47,7 +78,6 @@ public:
 	void addElement(T value){
 		if( root == nullptr ){
 			root = new BinaryNode<ST>(value);
-
 		}else{
 			BinaryNode<ST>* it = root;
 			BinaryNode<ST>* pos = nullptr;
@@ -66,6 +96,55 @@ public:
 			}
 		}
 	}
+
+	bool deleteElement(T value){
+		BinaryNode<ST>** pos;
+		if( find(value, pos)){
+			BinaryNode<ST> **m, *tmp;
+			if( (*pos)->right ){
+				tmp = (*pos);
+				minimun( (*pos)->right, m);
+				(*pos)->data = (*m)->data;
+				if( (*pos)->right == (*m)){
+					(*pos) = (*m);
+					(*pos)->left = tmp->left;
+				}
+				delete (*m);
+				(*m) = nullptr;
+			}else if( (*pos)->left ){
+				tmp = (*pos);
+				(*pos) = (*pos)->left;
+				delete tmp;
+			}else{
+				delete (*pos);
+				(*pos) = nullptr;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	bool find(T value, BinaryNode<ST>** &position){
+		position = &root;
+		while( (*position)  ){
+			if( (*position)->data == value){
+				return true;
+			}
+			else if( (*position)->data > value  ){
+				position = &(*position)->left;
+			}
+			else{
+				position = &(*position)->right;
+			}
+		}
+		return false;
+	}
+	
+	int weight(){
+		return weight(root);
+	}
+	//iterator inorder
+	//Altura Del Arbol
 	void printInOrder(){
 		printInOrder(root);
 		std::cout << "\n";
