@@ -57,13 +57,12 @@ class BinaryTree{
 		return (*position)->data;
 	}
 
-	BinaryNode<ST>* maximun(BinaryNode<ST>* current, BinaryNode<ST> **&position){
-		//RETORNAR PADRE MINIMO!!
+	T maximun(BinaryNode<ST>* current, BinaryNode<ST> **&position){
 		position = &current;
 		while((*position)->right){
 			position = &((*position)->right);
 		}
-		return (*position);
+		return (*position)->data;
 	}
 	
 	bool deleteElement(BinaryNode<ST>* &current, T value){
@@ -113,8 +112,14 @@ public:
 				(*m) = nullptr;
 			}else if( (*pos)->left ){
 				tmp = (*pos);
-				(*pos) = (*pos)->left;
+				maximun( (*pos)->left, m);
+				(*pos)->data = (*m)->data;
+				if( (*pos)->left == (*m)){
+					(*pos) = (*m);
+					(*pos)->left = tmp->left;
+				}
 				delete tmp;
+				(*m) = nullptr;
 			}else{
 				delete (*pos);
 				(*pos) = nullptr;
