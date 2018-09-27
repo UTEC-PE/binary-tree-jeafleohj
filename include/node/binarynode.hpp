@@ -19,8 +19,5 @@ struct BinaryNode: public Node<ST>{
 		if(right) right->killSelf();
 		delete this;
 	}
-	~BinaryNode(){
-		killSelf();
-	}
 };
 #endif

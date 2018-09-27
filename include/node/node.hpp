@@ -9,12 +9,5 @@ struct Node{
 		: data(data)
 	{};
 	virtual void killSelf()=0;
-	virtual ~Node()=0;
 };
-
-template <typename ST>
-Node<ST>::~Node(){
-	delete this;
-}
-
 #endif
