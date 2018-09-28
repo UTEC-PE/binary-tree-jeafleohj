@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "node/binarynode.hpp"
+#include "iterator/iterator.hpp"
 
 template <typename ST>
 class BinaryTree{
@@ -47,8 +48,6 @@ class BinaryTree{
 		return 0;
 	}
 
-
-
 	T minimun(BinaryNode<ST>* current, BinaryNode<ST> **&position){
 		position = &current;
 		while((*position)->left){
@@ -63,11 +62,6 @@ class BinaryTree{
 			position = &((*position)->right);
 		}
 		return (*position)->data;
-	}
-	
-	bool deleteElement(BinaryNode<ST>* &current, T value){
-
-		return false;
 	}
 	
 public:
@@ -151,7 +145,11 @@ public:
 	//iterator inorder
 	//Altura Del Arbol
 	void printInOrder(){
-		printInOrder(root);
+		Iterator<ST> i = begin();
+		for( ; !i.empty() ;++i){
+			std::cout << (*i) << " ";
+		}
+		//printInOrder(root);
 		std::cout << "\n";
 	}
 	void printPreOrder(){
@@ -161,6 +159,16 @@ public:
 	void printPostOrder(){
 		printPostOrder(root);
 		std::cout << "\n";
+	}
+
+	Iterator<ST> begin(){
+		Iterator<ST> b(root);
+		return b;
+	}
+
+	Iterator<ST> end(){
+		Iterator<ST> e(nullptr);
+		return e;
 	}
 };
 
