@@ -12,6 +12,9 @@ struct Number{
 
 
 int main(){
+	// Probaste tu eliminar bien? Con un árbol grande está generando un bucle infinito
+	// Probaste tu iterator? Te faltó el operador !=
+	// No implementaste el destructor de tu árbol
 	BinaryTree<Number> p;
 	p.addElement( 10);
 	p.addElement( 5);
